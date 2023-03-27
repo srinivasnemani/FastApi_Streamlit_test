@@ -51,7 +51,7 @@ class MockDataPersistence_Put(DataPersistence):
    """
     A mock DataPersistence class for put options that returns sample data instead of making database calls.
     """
-    def fetch_records(self, *args, **kwargs):
+   def fetch_records(self, *args, **kwargs):
         # Return sample data instead of making a database call
         data = {
             "DateAsOf": [20220101],
@@ -62,18 +62,17 @@ class MockDataPersistence_Put(DataPersistence):
             "ImpliedVol": [0.20]
         }
         return pd.DataFrame(data)
-
-    # Added for mocking as DataPersistence its an Interface and inherited class be instantiated without out the overriding the methods
-    def add_records(self, *args, **kwargs):
+   
+   def add_records(self, *args, **kwargs):
         pass
 
-    def create_table(self, *args, **kwargs):
+   def create_table(self, *args, **kwargs):
         pass
 
-    def delete_records(self, *args, **kwargs):
+   def delete_records(self, *args, **kwargs):
         pass
 
-    def update_records(self, *args, **kwargs):
+   def update_records(self, *args, **kwargs):
         pass
         
 
@@ -99,13 +98,13 @@ def option_pricer_put():
 
 @pytest.mark.asyncio
 async def test_validate_call_prices(option_pricer_call):
-"""
-    Test case for the calculate_market_prices method of the OptionPricer class for call options.
-    It checks whether the calculated option price is equal to the expected call option value within
-    
-Args:
-    option_pricer_call (OptionPricer): Instance of the OptionPricer class initialized with MockDataPersistence_Call.
-"""
+    """
+        Test case for the calculate_market_prices method of the OptionPricer class for call options.
+        It checks whether the calculated option price is equal to the expected call option value within
+        
+    Args:
+        option_pricer_call (OptionPricer): Instance of the OptionPricer class initialized with MockDataPersistence_Call.
+    """
 
     date_as_of = 20220101
     CALL_OPTION_VALUE = 0.1068075255
@@ -127,9 +126,9 @@ Args:
 
 @pytest.mark.asyncio
 async def test_validate_put_prices(option_pricer_put):
-"""
-    See the comments of above test_validate_call_prices
-"""
+    """
+        See the comments of above test_validate_call_prices
+    """
     date_as_of = 20220101
     PUT_OPTION_VALUE = 19.11287473
     response = await option_pricer_put.calculate_market_prices(date_as_of)
