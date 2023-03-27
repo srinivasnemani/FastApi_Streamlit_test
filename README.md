@@ -39,7 +39,7 @@ pytest .\src\tests\test_option_pricer_api.py
 
 <img src="docs/MarketData_Analysis_Page1.png" alt="Market Data Analysis page-1" title="Market Data Analysis page-1" width="900" height="600">
 
-<img src="docs/MarketData_Analysis_Page2.png" alt="Market Data Analysis page-2" title="Market Data Analysis page-2" width="900" height="600">
+<img src="docs/MarketData_Analysis_Page2.png" alt="Market Data Analysis page-2" title="Market Data Analysis page-2" width="600" height="900">
 
 
 
