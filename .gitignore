@@ -1,0 +1,6 @@
+.venv
+optiondata.db
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
