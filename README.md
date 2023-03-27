@@ -22,3 +22,14 @@ python .\src\api_manager.py
 Run Web server
 streamlit run .\src\gui_manager.py
 ```
+
+<img src="docs/fasapi_swagger_ui.PNG" alt="FastAPI Swagger UI" title="FastAPI Swagger UI" width="600" height="500">
+
+<img src="docs/MarketData_Upload_Page.PNG" alt="Market Data Upload page" title="Market Data Upload page" width="900" height="600">
+
+<img src="docs/MarketData_Analysis_Page1.png" alt="Market Data Analysis page-1" title="Market Data Analysis page-1" width="900" height="600">
+
+<img src="docs/MarketData_Analysis_Page2.png" alt="Market Data Analysis page-2" title="Market Data Analysis page-2" width="900" height="600">
+
+
+
