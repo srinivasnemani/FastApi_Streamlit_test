@@ -28,7 +28,7 @@ pytest .\src\tests\test_option_pricer_api.py
 ```
 
 
-### SCreen shots of the application
+### Screen shots of the application
 <img src="docs/fasapi_swagger_ui.PNG" alt="FastAPI Swagger UI" title="FastAPI Swagger UI" width="600" height="500">
 
 <img src="docs/MarketData_Upload_Page.PNG" alt="Market Data Upload page" title="Market Data Upload page" width="900" height="600">
