@@ -1,7 +1,7 @@
 # fastapi_streamlit_test
 This application developed using FastAPI, Streamlit web packages. 
-The application run begins by reading by option pricing data in either CSV or Excel format, later it stores the data in a sqlite db.
-User can also provide the market data using a JSON formatted text.
+The work flow begins by reading by option pricing data in either CSV or Excel format, then it stores the data in a sqlite db.
+User can also provide the market data in a JSON formatted text or call the api endpoint with with a json text.
 This application renders the web pages using streamlit package to provide interface for various CRUD operations.
 When user select the option to calculate option prices, it calculates the option prices using Black76 model and shows the ressults in tabular format as well as in a  interactive line plot(by using Python Bokeh package). It also provides the option to download the option prices in a CSV file. 
 
