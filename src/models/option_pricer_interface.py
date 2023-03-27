@@ -21,7 +21,7 @@ class IOptionPricer(ABC):
         An abstract method to be implemented by subclasses for calculating option prices.
     """
 
-    def __init__(self, model_name, market_data: pd.DataFrame):
+    def __init__(self, model_name: str, market_data: pd.DataFrame):
         self.model_name = model_name
         self.market_data = market_data
 
