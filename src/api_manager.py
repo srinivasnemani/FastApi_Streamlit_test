@@ -6,6 +6,7 @@ from typing import Optional, List
 import configparser
 from api.optionadata_fetcher import OptionDataFetcher
 from api.optionadata_uploader import OptionDataUploader
+from api.optionadata_deleter import OptionDataDeleter
 from api.option_pricer import OptionPricer
 
 """
@@ -50,6 +51,7 @@ class APIManager:
         self.uploader = OptionDataUploader(self.persistence)
         self.fetcher = OptionDataFetcher(self.persistence)
         self.calculator = OptionPricer(self.persistence)
+        self.deleter = OptionDataDeleter(self.persistence)
 
         self.initialize_api_endpoints()
 
@@ -67,6 +69,7 @@ class APIManager:
         self.app.get("/fetchdata_asof/{date_as_of}")(self.fetcher.fetch_records_asof)
         self.app.get("/fetchuniqutedates/")(self.fetcher.fetch_distinct_dates)
         self.app.get("/calculateoptionprices/{date_as_of}/")(self.calculator.calculate_market_prices)
+        self.app.delete("/deletedata_asof/{date_as_of}/")(self.deleter.delete_records_asof)
 
     def run(self) -> None:
         """
