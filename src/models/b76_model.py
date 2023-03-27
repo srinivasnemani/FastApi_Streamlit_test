@@ -1,7 +1,7 @@
 import pandas as pd
 import numpy as np
 import scipy.stats as stats
-from models.generic_option_pricer import IOptionPricer
+from models.option_pricer_interface import IOptionPricer
 
 RISK_FREE_RATE = 0.05
 
@@ -27,7 +27,8 @@ class B76OptionPricer(IOptionPricer):
         market_data : pd.DataFrame
             A DataFrame containing the market data for option pricing.
         """
-        super().__init__(market_data=market_data)
+        model_name = 'Black76'
+        super().__init__(model_name, market_data=market_data)
 
     def calculate_option_prices(self) -> pd.DataFrame:
         """
