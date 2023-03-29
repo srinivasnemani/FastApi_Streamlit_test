@@ -48,25 +48,27 @@ class DataAnalysisPage(IWebPage):
                     st.session_state["unique_dates"] = None
 
                 if st.button("Fetch Unique Data dates"):
-                
                     config_url_fetch_unique_dates = self.config.get("GUI_URLS", "fetchuniqutedatesURL")
                     host = self.config.get("API", "host")
                     port = self.config.get("API", "port")
                     url_fetch_unique_dates =  "http://" + host + ":" + port  + config_url_fetch_unique_dates                
                     response_unique_dates = requests.get(url_fetch_unique_dates)
-                    response_unique_dates_str = response_unique_dates.text
+                    if response_unique_dates.status_code == 200:
+                        response_unique_dates_str = response_unique_dates.text
 
-                    # Parse the top-level JSON object
-                    response_unique_dates_obj = json.loads(response_unique_dates_str)
+                        # Parse the top-level JSON object
+                        response_unique_dates_obj = json.loads(response_unique_dates_str)
 
-                    # Extract the "success" value as a string
-                    dates_str = response_unique_dates_obj["success"]
-                    dates_arr = json.loads(dates_str)
-                    unique_dates = pd.DataFrame(dates_arr, columns=["date"])
-                    # Convert the date column to datetime objects (for formatting)
-                    unique_dates["date"] = pd.to_datetime(unique_dates["date"], format="%Y%m%d")
-                    unique_dates["date"] = unique_dates["date"].dt.strftime("%Y-%m-%d")
-                    st.session_state.unique_dates = unique_dates
+                        # Extract the "success" value as a string
+                        dates_str = response_unique_dates_obj["success"]
+                        dates_arr = json.loads(dates_str)
+                        unique_dates = pd.DataFrame(dates_arr, columns=["date"])
+                        # Convert the date column to datetime objects (for formatting)
+                        unique_dates["date"] = pd.to_datetime(unique_dates["date"], format="%Y%m%d")
+                        unique_dates["date"] = unique_dates["date"].dt.strftime("%Y-%m-%d")
+                        st.session_state.unique_dates = unique_dates
+                    else:
+                        st.error("Error fetching unique dates: " + str(response_unique_dates.status_code))
                 
                 
                 if st.session_state.unique_dates is not None:
@@ -75,12 +77,10 @@ class DataAnalysisPage(IWebPage):
                     selected_date = st.session_state.selected_date
                     st.session_state.page2_selected_date   = selected_date
 
-
                 if st.session_state["page2_selected_date"] is not None:                
                     st.write(f"Selected Date is: ", st.session_state.page2_selected_date)
                     
-                    
-                if st.button("Fecth Option Data for the Selected Dates"):
+                if st.button("Fecth Option Data for the Selected Date"):
                     try:
                         if st.session_state["page2_selected_date"] is not None:
                             #st.write(f"Feching market data for the Date is: ", st.session_state.page2_selected_date)
@@ -104,7 +104,22 @@ class DataAnalysisPage(IWebPage):
                             self.create_option_pricing_plot(container_R2, option_price_data_df)
                     except HTTPException as e:
                         st.error(e.detail)    
-                        
+
+                if st.button("Delete the market Data for the Selected Date"):
+                
+                    config_url_delete_unique_date = self.config.get("GUI_URLS", "deleteDataAsOfURL")
+                    host_delete = self.config.get("API", "host")
+                    port_delete = self.config.get("API", "port")
+                    selected_date_obj_delete = datetime.strptime(st.session_state.page2_selected_date, "%Y-%m-%d")
+                    selected_date_delete_yyyymmdd = selected_date_obj_delete.strftime("%Y%m%d")
+                    url_delete_unique_dates =  "http://" + host_delete + ":" + port_delete  +  "/" + config_url_delete_unique_date  + selected_date_delete_yyyymmdd +  "/"      
+                    response_unique_dates = requests.delete(url_delete_unique_dates)
+                    response_unique_dates_str = response_unique_dates.text
+                    response_unique_dates_obj = json.loads(response_unique_dates_str)      
+
+                    delete_api_return_message = response_unique_dates_obj["success"]                     
+                    st.write(delete_api_return_message + "for the date : " + str(st.session_state.page2_selected_date))
+
     def write_this_data_in_C1(self, container_R1, option_price_data_df):
         with container_R1:
             st.write(option_price_data_df)
@@ -157,3 +172,5 @@ class DataAnalysisPage(IWebPage):
         sorted_df["FutureExpiryDate"] = pd.to_datetime(sorted_df["FutureExpiryDate"], format="%Y%m%d").dt.strftime("%Y-%m-%d")
         return sorted_df
 
+    # def delete_data_for_selected_date(self, 
+    # )
