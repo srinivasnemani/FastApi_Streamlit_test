@@ -56,12 +56,16 @@ class OptionDataUploader:
 
     @logger_decorator
     async def load_market_data_json(self, market_data_list: MarketDataList) -> dict:
+    # async def load_market_data_json(self, market_data_list) -> dict:
+        
         os.system('cls' if os.name == 'nt' else 'clear')
         item = market_data_list.data
+        
         df = pd.DataFrame(item, columns=column_names)
         for column in column_names:
             df[column] = df[column].apply(lambda x: x[1])
 
+        print(df)
         self.persistence.add_records(BrentOptionData, df)
         return {"success": "Json market data uploaded to database."}
 

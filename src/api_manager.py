@@ -8,6 +8,7 @@ from api.optionadata_fetcher import OptionDataFetcher
 from api.optionadata_uploader import OptionDataUploader
 from api.optionadata_deleter import OptionDataDeleter
 from api.option_pricer import OptionPricer
+from fastapi.middleware.cors import CORSMiddleware
 
 """
     This module acts the API end point manager responsible for
@@ -44,7 +45,18 @@ class APIManager:
         
         # create the FastAPI instance and data persistence object
         self.app = FastAPI()
-        
+        origins = [
+            "http://localhost:3000",  # Replace with your React app's address
+        ]        
+
+        self.app.add_middleware(
+        CORSMiddleware,
+        allow_origins=origins,
+        allow_credentials=True,
+        allow_methods=["*"],
+        allow_headers=["*"],
+        )
+
         self.persistence = DataPersistenceORM(database_url)
         self.persistence.create_table(optiondata_dbschmea)
         
@@ -79,6 +91,7 @@ class APIManager:
         uvicorn.run(self.app, host=self.host, port=self.port)
 
 if __name__ == "__main__":
+
     CONFIG_FILE = 'config.ini'
     api_manager = APIManager(CONFIG_FILE)       
     api_manager.run()
