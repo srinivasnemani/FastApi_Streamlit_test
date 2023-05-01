@@ -1,3 +1,5 @@
+[![Python Build](https://github.com/srinivasnemani/FastApi_Streamlit_test/actions/workflows/python-package-conda.yml/badge.svg)](https://github.com/srinivasnemani/FastApi_Streamlit_test/actions/workflows/python-package-conda.yml)
+
 # fastapi_streamlit_test
 This application is developed using the FastAPI and Streamlit packages. 
 The workflow begins by reading the option pricing data from either CSV or Excel format files, and then stores the data in an SQLite database. Users can also provide market data in JSON-formatted text or call the API endpoint with JSON text. 
